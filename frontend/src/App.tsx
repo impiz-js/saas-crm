@@ -4,6 +4,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import AppLayout from "./layouts/AppLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import OnboardingStep2 from "./pages/OnboardingStep2";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
 import Leads from "./pages/Leads";
@@ -41,6 +42,14 @@ export default function App() {
             <AuthLayout>
               <Register />
             </AuthLayout>
+          }
+        />
+        <Route
+          path="/onboarding/step-2"
+          element={
+            <ProtectedRoute>
+              <OnboardingStep2 />
+            </ProtectedRoute>
           }
         />
         <Route

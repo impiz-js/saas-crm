@@ -38,17 +38,24 @@ enum ActivityAction {
   DELETED
 }
 
+enum PlanType {
+  BASIC
+  PRO
+  BUSINESS
+}
+
 model User {
-  id           String      @id @default(uuid())
+  id           String            @id @default(uuid())
   name         String
-  email        String      @unique
+  email        String            @unique
   passwordHash String
-  role         Role        @default(MANAGER)
-  createdAt    DateTime    @default(now())
+  role         Role              @default(MANAGER)
+  createdAt    DateTime          @default(now())
   clients      Client[]
   leads        Lead[]
   deals        Deal[]
   activities   Activity[]
+  onboarding   OnboardingStep2?
 }
 
 model Client {
@@ -100,4 +107,18 @@ model Activity {
   createdAt  DateTime       @default(now())
   user       User           @relation(fields: [userId], references: [id])
   userId     String
+}
+
+model OnboardingStep2 {
+  id                   String   @id @default(uuid())
+  user                 User     @relation(fields: [userId], references: [id])
+  userId               String   @unique
+  plan                 PlanType
+  teamSize             Int
+  telegramEnabled      Boolean  @default(false)
+  employeeLoadEnabled  Boolean  @default(false)
+  onlinePayments       Boolean  @default(false)
+  completed            Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 }

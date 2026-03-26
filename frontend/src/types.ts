@@ -1,6 +1,7 @@
 export type Role = "ADMIN" | "MANAGER";
 export type LeadStatus = "NEW" | "IN_PROGRESS" | "CLOSED";
 export type DealStage = "NEW" | "IN_PROGRESS" | "CLOSED";
+export type PlanType = "BASIC" | "PRO" | "BUSINESS";
 
 export interface User {
   id: string;
@@ -67,4 +68,14 @@ export interface DashboardOverview {
   leadsByStatus: Record<LeadStatus, number>;
   leadsSeries: { date: string; leads: number }[];
   recentActivities: Activity[];
+}
+
+export interface OnboardingStep2 {
+  id: string;
+  plan: PlanType;
+  teamSize: number;
+  telegramEnabled: boolean;
+  employeeLoadEnabled: boolean;
+  onlinePayments: boolean;
+  completed: boolean;
 }

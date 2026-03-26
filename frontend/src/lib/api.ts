@@ -1,4 +1,4 @@
-import { Client, Deal, Lead, PaginatedResponse, DashboardOverview, User } from "../types";
+import { Client, Deal, Lead, PaginatedResponse, DashboardOverview, OnboardingStep2, PlanType, User } from "../types";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
@@ -110,6 +110,26 @@ export const api = {
   },
   async deleteDeal(token: string, id: string) {
     return request<void>(`/deals/${id}`, { method: "DELETE" }, token);
+  },
+  async getOnboardingStep2(token: string) {
+    return request<{ onboarding: OnboardingStep2 | null }>("/onboarding/step2", { method: "GET" }, token);
+  },
+  async saveOnboardingStep2(
+    token: string,
+    data: {
+      plan: PlanType;
+      teamSize: number;
+      integrations: {
+        telegramEnabled: boolean;
+        employeeLoadEnabled: boolean;
+        onlinePayments: boolean;
+      };
+    }
+  ) {
+    return request<{ onboarding: OnboardingStep2 }>("/onboarding/step2", {
+      method: "PUT",
+      body: JSON.stringify(data)
+    }, token);
   }
 };
 

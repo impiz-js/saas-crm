@@ -32,7 +32,7 @@ export default function Register() {
   const onSubmit = async (data: FormValues) => {
     await registerUser(data.name, data.email, data.password);
     setIsSuccess(true);
-    setTimeout(() => navigate("/"), 900);
+    setTimeout(() => navigate("/onboarding/step-2"), 900);
   };
 
   return (
