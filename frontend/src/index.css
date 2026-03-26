@@ -12,10 +12,7 @@
 body {
   font-family: "Manrope", system-ui, sans-serif;
   margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(14, 116, 144, 0.08), transparent 45%),
-    radial-gradient(circle at 60% 10%, rgba(14, 165, 233, 0.12), transparent 40%),
-    #f6f7fb;
+  background: #f8fafc;
   min-height: 100vh;
 }
 
