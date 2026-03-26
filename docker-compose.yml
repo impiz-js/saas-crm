@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16
+    container_name: studioflow-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: saas_crm
+    ports:
+      - "5432:5432"
+    volumes:
+      - crm_db:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: studioflow-api
+    depends_on:
+      - db
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/saas_crm
+      JWT_SECRET: change_me
+      JWT_EXPIRES_IN: 7d
+      CORS_ORIGIN: http://localhost:5173
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: sh -c "until nc -z db 5432; do sleep 1; done; npm run prisma:generate && npx prisma db push && npm run seed && npm run dev"
+
+  frontend:
+    build: ./frontend
+    container_name: studioflow-web
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:4000/api
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host
+
+volumes:
+  crm_db:

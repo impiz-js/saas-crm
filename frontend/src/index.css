@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #0f172a;
+  background-color: #f5f7fb;
+}
+
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(14, 116, 144, 0.08), transparent 45%),
+    radial-gradient(circle at 60% 10%, rgba(14, 165, 233, 0.12), transparent 40%),
+    #f6f7fb;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.bg-dots {
+  background-image: radial-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.card {
+  @apply bg-white/90 backdrop-blur border border-white/70 shadow-card rounded-xl;
+}
+
+.glass {
+  @apply bg-white/70 backdrop-blur border border-white/60;
+}
+
+.input {
+  @apply w-full rounded-lg border border-ink-200 bg-white/80 px-3 py-2 text-sm text-ink-800 placeholder:text-ink-500 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition;
+}
+
+.btn-primary {
+  @apply btn bg-brand-700 text-white shadow-soft hover:bg-brand-900;
+}
+
+.btn-secondary {
+  @apply btn border border-ink-200 bg-white/80 text-ink-700 hover:border-brand-300 hover:text-ink-900;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
+}

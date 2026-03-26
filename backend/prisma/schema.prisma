@@ -1,0 +1,103 @@
+// Prisma schema for SaaS CRM
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+}
+
+enum LeadStatus {
+  NEW
+  IN_PROGRESS
+  CLOSED
+}
+
+enum DealStage {
+  NEW
+  IN_PROGRESS
+  CLOSED
+}
+
+enum ActivityEntity {
+  CLIENT
+  LEAD
+  DEAL
+}
+
+enum ActivityAction {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+model User {
+  id           String      @id @default(uuid())
+  name         String
+  email        String      @unique
+  passwordHash String
+  role         Role        @default(MANAGER)
+  createdAt    DateTime    @default(now())
+  clients      Client[]
+  leads        Lead[]
+  deals        Deal[]
+  activities   Activity[]
+}
+
+model Client {
+  id          String   @id @default(uuid())
+  name        String
+  phone       String?
+  email       String?
+  note        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
+  leads       Lead[]
+  deals       Deal[]
+}
+
+model Lead {
+  id          String     @id @default(uuid())
+  status      LeadStatus @default(NEW)
+  date        DateTime   @default(now())
+  source      String?
+  client      Client?    @relation(fields: [clientId], references: [id])
+  clientId    String?
+  createdBy   User       @relation(fields: [createdById], references: [id])
+  createdById String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Deal {
+  id          String    @id @default(uuid())
+  title       String
+  stage       DealStage @default(NEW)
+  amount      Float?
+  client      Client?   @relation(fields: [clientId], references: [id])
+  clientId    String?
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  createdById String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Activity {
+  id         String         @id @default(uuid())
+  entityType ActivityEntity
+  entityId   String
+  action     ActivityAction
+  message    String
+  createdAt  DateTime       @default(now())
+  user       User           @relation(fields: [userId], references: [id])
+  userId     String
+}
