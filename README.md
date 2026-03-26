@@ -1,43 +1,101 @@
-# StudioFlow CRM (SaaS для малого бизнеса)
+# StudioFlow CRM
 
-Современный full‑stack CRM для салонов, фитнес‑студий и сервисных компаний. Проект демонстрирует полный цикл разработки SaaS: авторизация, роли, CRUD, аналитика, UI/UX и архитектурное разделение.
+StudioFlow CRM is a full-stack SaaS CRM template for service businesses: salons, fitness studios, and local service teams.
 
-## Что внутри
+The project demonstrates a production-style architecture with separated frontend/backend, role-based access, analytics dashboard, and Docker-first local launch.
 
-- JWT‑аутентификация и регистрация
-- Роли: `ADMIN`, `MANAGER`
-- Ограничения: удаление сущностей доступно только `ADMIN`
-- CRUD: клиенты, заявки, сделки
-- Dashboard: динамика заявок, конверсия, последние действия
-- Поиск, фильтры, пагинация
-- Валидация форм, обработка ошибок
-- Современный UI (Notion/Stripe‑стилистика), адаптивность
+## Product Scope
 
-## Архитектура
+- Authentication with JWT (`register`, `login`, `me`)
+- Role model: `ADMIN`, `MANAGER`
+- CRUD modules:
+  - Clients
+  - Leads
+  - Deals
+- Dashboard:
+  - Leads dynamics chart
+  - Conversion summary
+  - Recent activity feed
+- Search and filtering in all core lists
+- Pagination
+- Form validation and backend error handling
 
+## Tech Stack
+
+- Frontend: React, Vite, Tailwind CSS, Zustand, React Hook Form, Zod, Recharts
+- Backend: Node.js, Express, Prisma, Zod
+- Database: PostgreSQL
+- Auth: JWT
+- Infra: Docker Compose
+
+## Repository Structure
+
+```text
+.
+├─ frontend/               # React app (admin panel)
+├─ backend/                # REST API
+├─ backend/prisma/         # schema + seed
+├─ docs/screenshots/       # real UI screenshots
+└─ docker-compose.yml      # local full-stack orchestration
 ```
-/ backend   — REST API (Express + Prisma + PostgreSQL)
-/ frontend  — SPA (React + Tailwind + Zustand)
-/ docs      — скриншоты
-```
 
-### Backend (REST)
+## API Endpoints
 
+Auth:
 - `POST /api/auth/register`
 - `POST /api/auth/login`
 - `GET /api/auth/me`
-- `GET /api/clients` / `POST /api/clients` / `PATCH /api/clients/:id` / `DELETE /api/clients/:id`
-- `GET /api/leads` / `POST /api/leads` / `PATCH /api/leads/:id` / `DELETE /api/leads/:id`
-- `GET /api/deals` / `POST /api/deals` / `PATCH /api/deals/:id` / `DELETE /api/deals/:id`
+
+Clients:
+- `GET /api/clients`
+- `POST /api/clients`
+- `PATCH /api/clients/:id`
+- `DELETE /api/clients/:id` (`ADMIN` only)
+
+Leads:
+- `GET /api/leads`
+- `POST /api/leads`
+- `PATCH /api/leads/:id`
+- `DELETE /api/leads/:id` (`ADMIN` only)
+
+Deals:
+- `GET /api/deals`
+- `POST /api/deals`
+- `PATCH /api/deals/:id`
+- `DELETE /api/deals/:id` (`ADMIN` only)
+
+Dashboard:
 - `GET /api/dashboard/overview`
 
-## Запуск локально
+Health:
+- `GET /api/health`
 
-### 1) Backend
+## Local Run (Docker)
 
+Start full stack:
+
+```bash
+docker compose up --build
 ```
+
+Stop and remove volumes:
+
+```bash
+docker compose down -v
+```
+
+URLs:
+- Frontend: `http://localhost:5173`
+- API: `http://localhost:4000/api`
+- API health: `http://localhost:4000/api/health`
+
+## Local Run (Without Docker)
+
+Backend:
+
+```bash
 cd backend
-copy .env.example .env
+cp .env.example .env
 npm install
 npm run prisma:generate
 npm run prisma:migrate
@@ -45,46 +103,40 @@ npm run seed
 npm run dev
 ```
 
-### 2) Frontend
+Frontend:
 
-```
+```bash
 cd frontend
-copy .env.example .env
+cp .env.example .env
 npm install
 npm run dev
 ```
 
-Откройте `http://localhost:5173`.
+## Seed Credentials
 
-## Docker (опционально)
+After seed:
+- Email: `admin@studioflow.local`
+- Password: `admin123`
 
-```
-docker compose up --build
-```
+## Screenshots
 
-При запуске контейнера API автоматически выполняет `prisma db push` и `seed`.
+### Login
+![Login](docs/screenshots/login.png)
 
-Остановка и очистка данных:
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
 
-```
-docker compose down -v
-```
+### Clients
+![Clients](docs/screenshots/clients.png)
 
-## Скриншоты
+### Leads
+![Leads](docs/screenshots/leads.png)
 
-![Dashboard](docs/dashboard.svg)
-![Clients](docs/clients.svg)
-![Login](docs/login.svg)
+### Deals
+![Deals](docs/screenshots/deals.png)
 
-## Брендинг
+## Notes
 
-**StudioFlow** — CRM для компаний сферы услуг, где важна скорость обработки заявок и повторные продажи.
-
-## Данные для входа (после seed)
-
-- `admin@studioflow.local`
-- `admin123`
-
----
-
-Если нужно расширить проект: роли для маркетолога, интеграции с WhatsApp/Telegram, планирование, счета и платежи.
+- `MANAGER` can create and edit entities, but delete actions are restricted to `ADMIN`.
+- Leads and deals support client linking directly from the form.
+- The UI is responsive and built as a clean admin workspace rather than a landing page.
