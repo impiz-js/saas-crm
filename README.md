@@ -1,24 +1,27 @@
 # StudioFlow CRM
 
-StudioFlow CRM is a full-stack SaaS CRM template for service businesses: salons, fitness studios, and local service teams.
+StudioFlow CRM is a full-stack SaaS CRM for service businesses (salons, studios, fitness clubs, local teams).
 
-The project demonstrates a production-style architecture with separated frontend/backend, role-based access, analytics dashboard, and Docker-first local launch.
+It includes role-based CRM workflows, dashboard analytics, and a two-step onboarding flow with backend persistence.
 
-## Product Scope
+## Core Features
 
-- Authentication with JWT (`register`, `login`, `me`)
-- Role model: `ADMIN`, `MANAGER`
-- CRUD modules:
-  - Clients
-  - Leads
-  - Deals
+- JWT authentication: `register`, `login`, `me`
+- Roles: `ADMIN`, `MANAGER`
+- CRM modules:
+  - Clients CRUD
+  - Leads CRUD
+  - Deals CRUD
 - Dashboard:
-  - Leads dynamics chart
+  - Lead dynamics chart
   - Conversion summary
   - Recent activity feed
-- Search and filtering in all core lists
-- Pagination
-- Form validation and backend error handling
+- Search, filtering, pagination
+- Form validation and API error handling
+- SaaS onboarding:
+  - Step 1/2: account creation UX
+  - Step 2/2: plan, team size, integrations
+  - Saved in backend and loaded on revisit
 
 ## Tech Stack
 
@@ -28,18 +31,18 @@ The project demonstrates a production-style architecture with separated frontend
 - Auth: JWT
 - Infra: Docker Compose
 
-## Repository Structure
+## Project Structure
 
 ```text
 .
-├─ frontend/               # React app (admin panel)
+├─ frontend/               # React admin panel
 ├─ backend/                # REST API
 ├─ backend/prisma/         # schema + seed
 ├─ docs/screenshots/       # real UI screenshots
 └─ docker-compose.yml      # local full-stack orchestration
 ```
 
-## API Endpoints
+## REST API
 
 Auth:
 - `POST /api/auth/register`
@@ -67,12 +70,14 @@ Deals:
 Dashboard:
 - `GET /api/dashboard/overview`
 
+Onboarding:
+- `GET /api/onboarding/step2`
+- `PUT /api/onboarding/step2`
+
 Health:
 - `GET /api/health`
 
-## Local Run (Docker)
-
-Start full stack:
+## Run with Docker
 
 ```bash
 docker compose up --build
@@ -86,10 +91,10 @@ docker compose down -v
 
 URLs:
 - Frontend: `http://localhost:5173`
-- API: `http://localhost:4000/api`
+- API base: `http://localhost:4000/api`
 - API health: `http://localhost:4000/api/health`
 
-## Local Run (Without Docker)
+## Run without Docker
 
 Backend:
 
@@ -114,7 +119,6 @@ npm run dev
 
 ## Seed Credentials
 
-After seed:
 - Email: `admin@studioflow.local`
 - Password: `admin123`
 
@@ -122,6 +126,12 @@ After seed:
 
 ### Login
 ![Login](docs/screenshots/login.png)
+
+### Register (Step 1/2)
+![Register Step 1](docs/screenshots/register-step1.png)
+
+### Onboarding (Step 2/2)
+![Onboarding Step 2](docs/screenshots/onboarding-step2.png)
 
 ### Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
@@ -138,5 +148,5 @@ After seed:
 ## Notes
 
 - `MANAGER` can create and edit entities, but delete actions are restricted to `ADMIN`.
-- Leads and deals support client linking directly from the form.
-- The UI is responsive and built as a clean admin workspace rather than a landing page.
+- Leads and deals support client linking directly from forms.
+- Onboarding step 2 is persisted in PostgreSQL and can be loaded back for the current user.
