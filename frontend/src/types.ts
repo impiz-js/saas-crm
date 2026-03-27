@@ -79,3 +79,16 @@ export interface OnboardingStep2 {
   onlinePayments: boolean;
   completed: boolean;
 }
+
+export interface Company {
+  id: string;
+  name: string;
+  logoUrl?: string | null;
+  timezone: string;
+  currency: string;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  website?: string | null;
+  taxId?: string | null;
+}
