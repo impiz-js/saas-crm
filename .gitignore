@@ -3,14 +3,26 @@ node_modules/
 
 # Env
 .env
+.env.local
 
 # Build
 /dist/
 /frontend/dist/
 /backend/dist/
 
+# Prisma
+prisma/generated/
+prisma/*.js
+!prisma/seed.ts
+
 # Logs
 npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # OS
 .DS_Store
