@@ -10,6 +10,7 @@ import Clients from "./pages/Clients";
 import Leads from "./pages/Leads";
 import Deals from "./pages/Deals";
 import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 import { useAuthStore } from "./store/auth";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
@@ -98,6 +99,16 @@ export default function App() {
             <ProtectedRoute>
               <AppLayout>
                 <Settings />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <Profile />
               </AppLayout>
             </ProtectedRoute>
           }

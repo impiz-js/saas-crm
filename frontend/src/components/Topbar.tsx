@@ -1,5 +1,6 @@
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, User } from "lucide-react";
 import { useAuthStore } from "../store/auth";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -8,6 +9,7 @@ interface Props {
 
 export default function Topbar({ title, subtitle }: Props) {
   const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -27,10 +29,14 @@ export default function Topbar({ title, subtitle }: Props) {
           <Bell size={16} />
           Уведомления
         </button>
-        <div className="glass rounded-lg px-3 py-2 text-sm">
+        <button
+          onClick={() => navigate("/profile")}
+          className="glass flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-ink-100 transition-colors"
+          type="button"
+        >
+          <User size={16} className="text-ink-600" />
           <div className="font-semibold text-ink-800">{user?.name || "Пользователь"}</div>
-          <div className="text-xs text-ink-500">{user?.role === "ADMIN" ? "Admin" : "Manager"}</div>
-        </div>
+        </button>
         <button className="btn-primary" type="button" onClick={logout}>
           Выйти
         </button>

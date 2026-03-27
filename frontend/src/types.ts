@@ -92,3 +92,11 @@ export interface Company {
   website?: string | null;
   taxId?: string | null;
 }
+
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+  createdAt: string;
+}

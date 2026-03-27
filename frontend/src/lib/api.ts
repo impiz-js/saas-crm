@@ -1,4 +1,4 @@
-import { Client, Deal, Lead, PaginatedResponse, DashboardOverview, OnboardingStep2, PlanType, User, Company } from "../types";
+import { Client, Deal, Lead, PaginatedResponse, DashboardOverview, OnboardingStep2, PlanType, User, Company, UserProfile } from "../types";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
@@ -150,6 +150,34 @@ export const api = {
   ) {
     return request<{ company: Company }>("/company", {
       method: "PUT",
+      body: JSON.stringify(data)
+    }, token);
+  },
+  async getProfile(token: string) {
+    return request<{ user: UserProfile }>("/profile", { method: "GET" }, token);
+  },
+  async updateProfile(
+    token: string,
+    data: {
+      name: string;
+      email: string;
+    }
+  ) {
+    return request<{ user: UserProfile }>("/profile", {
+      method: "PUT",
+      body: JSON.stringify(data)
+    }, token);
+  },
+  async changePassword(
+    token: string,
+    data: {
+      currentPassword: string;
+      newPassword: string;
+      confirmPassword: string;
+    }
+  ) {
+    return request<{ message: string }>("/profile/change-password", {
+      method: "POST",
       body: JSON.stringify(data)
     }, token);
   }
