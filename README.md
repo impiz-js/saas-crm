@@ -1,8 +1,17 @@
 # StudioFlow CRM
 
-StudioFlow CRM is a full-stack SaaS CRM for service businesses (salons, studios, fitness clubs, local teams).
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-228543?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)](https://expressjs.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-5.x-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-It includes role-based CRM workflows, dashboard analytics, and a two-step onboarding flow with backend persistence.
+Full-stack SaaS CRM for service businesses (salons, studios, fitness clubs, local teams).
+
+Features role-based CRM workflows, dashboard analytics, and a two-step onboarding flow with backend persistence.
 
 ## Core Features
 
@@ -150,3 +159,22 @@ npm run dev
 - `MANAGER` can create and edit entities, but delete actions are restricted to `ADMIN`.
 - Leads and deals support client linking directly from forms.
 - Onboarding step 2 is persisted in PostgreSQL and can be loaded back for the current user.
+
+## Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please make sure to:
+- Follow the existing code style
+- Update documentation if needed
+- Test your changes with Docker
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
